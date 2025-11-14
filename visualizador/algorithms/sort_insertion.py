@@ -1,4 +1,4 @@
-# Contrato: init(vals), step() -> {"a": int, "b": int, "swap": bool, "done": bool}
+ # Contrato: init(vals), step() -> {"a": int, "b": int, "swap": bool, "done": bool}
 
 items = []
 n = 0
@@ -13,9 +13,18 @@ def init(vals):
     j = None
 
 def step():
-    # TODO:
-    # - Si i >= n: devolver {"done": True}.
-    # - Si j es None: empezar desplazamiento para el items[i] (p.ej., j = i) y devolver un highlight sin swap.
-    # - Mientras j > 0 y items[j-1] > items[j]: hacer UN swap adyacente (j-1, j) y devolverlo con swap=True.
-    # - Si ya no hay que desplazar: avanzar i y setear j=None.
-    return {"done": True}
+    global items, n,i, j  # TODO:
+    if i>= n:         # - Si i >= n: devolver {"done": True}.
+        return {"done": true}
+
+    if j == None:   # - Si j es None: empezar desplazamiento para el items[i] (p.ej., j = i) y devolver un highlight sin swap.
+        j=i
+        return {"a": j-1,"b": j,"swap": false,"done": false}
+
+    if (j > 0) and (items[j-1]>items[j]):     # - Mientras j > 0 y items[j-1] > items[j]: hacer UN swap adyacente (j-1, j) y devolverlo con swap=True.
+        items[j-1],items[j]=items[j],items[j-1]
+        return {"a"=items[j-1],"b"=items[j],"swap":true,"done": true}
+
+    i=i+1                         # - Si ya no hay que desplazar: avanzar i y setear j=None.
+    j=None
+    return {"swap": false,"done": true}
